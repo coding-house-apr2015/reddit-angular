@@ -1,10 +1,20 @@
 'use strict';
 
-angular.module('poseidon')
+angular.module('reddit')
 .factory('User', function($rootScope, $http, nodeUrl){
 
-  function User(){
+  function User(obj){
+    this.username = obj.username;
+    this.avatar = obj.avatar;
   }
+
+  User.prototype.save = function(){
+    return $http.put(nodeUrl + '/users', this);
+  };
+
+  User.show = function(){
+    return $http.get(nodeUrl + '/users');
+  };
 
   User.initialize = function(){
     return $http.post(nodeUrl + '/users');
